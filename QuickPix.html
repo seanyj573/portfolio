@@ -1,0 +1,484 @@
+<!DOCTYPE HTML>
+<html>
+	<style>
+		#main {
+			width: 100%;
+			margin: 0;
+		}
+		#header {
+			position: sticky;
+			top: 0px;
+			z-index: 10;
+			background-color: #496498;
+		}
+		#header-in {
+			display: flex;
+			padding: 30px;
+			font-size: 45px;
+			font-family: calibri;
+			font-weight: 600;
+			color: white;
+			transition: 0.5s;
+		}
+		#header-text {
+			transition: 0.6s;
+			margin: 0px;
+			padding: 0px;
+			cursor: context-menu;
+		}
+		#header-text:hover {
+			color: #32B287;
+			transition: 0.6s;
+		}
+		#rss-options {
+			margin-left: auto;
+			cursor: context-menu;
+		}
+		#search-box {
+			float: left;
+			border: solid;
+			border-color: #F5BDD0;
+			border-radius: 20px; 
+			margin-right: 15px;
+			margin-top: 16px;
+			height: 50%;
+			width: 300px;
+			transition: 0.6s;
+			display: none;
+		}
+		#search-box:hover {
+			border-color: #E76591;
+			transition: 0.6s;
+			cursor: text;
+		}
+		#input-box {
+			float: left;
+			margin-top: -18px;
+			margin-left: 10px;
+			overflow: hidden;
+			width: 80%;
+		}
+		#search-input {
+			border: none;
+			outline: none;
+			width: 100%;
+			font-size: 20px;
+			font-family: calibri;
+			font-weight: 550;
+			color: #32B287;
+			background-color: #496498;
+		}
+		::placeholder {
+			color: #F5BDD0;
+			font-style: italic;
+			font-weight: 400;
+			opacity: 0.2;
+		}
+		#search-button {
+			float: right;
+			margin-bottom: 6px;
+			margin-right: 6px;
+			overflow: hidden;
+		}
+		#search-button:hover {
+			cursor: pointer;
+		}
+		#reddit-option {
+			transition: 0.3s;
+			margin-left: 15px;
+			margin-right: 15px;
+			margin-bottom: -9px;
+			overflow: hidden;
+		}
+		#reddit-option:hover {
+			transition: 0.3s;
+			transform: scale(1.3);
+			cursor: pointer;
+		}
+		#nasa-option {
+			transition: 0.3s;
+			margin-left: 15px;
+			margin-bottom: -8px;
+			overflow: hidden;
+		}
+		#nasa-option:hover {
+			transition: 0.3s;
+			transform: scale(1.3);
+			cursor: pointer;
+		}
+		#app-main {
+			overflow: auto;
+			display: grid;
+			padding-top: 50px;
+			padding-bottom: 50px;
+			padding-left: 80px;
+			padding-right: 80px;
+			grid-template-columns: 4fr 8fr 4fr;
+			grid-template-areas: ". . .";
+			background-color: #32B287;
+		}
+		#app-block-wrapper {
+			margin-left: 20px;
+			margin-right: 20px;	
+		}
+		#block-1-content {
+			position: relative;
+		}
+		#block-1-left {
+			margin: 0px;
+			padding 0px;
+			position: absolute;
+			width: 10%;
+			height: 100%;
+			opacity: 0;
+			background-color: white;
+			transition: 0.3s;
+			z-index: 2;
+		}
+		#block-1-left:hover {
+			opacity: 0.3;
+			transition: 0.3s;
+			cursor: pointer;
+		}
+		#block-1-right {
+			margin: 0px;
+			padding 0px;
+			position: absolute;
+			right: 0px;
+			width: 10%;
+			height: 100%;
+			opacity: 0;
+			background-color: white;
+			transition: 0.3s;
+			z-index: 2;
+		}
+		#block-1-right:hover {
+			opacity: 0.3;
+			transition: 0.3s;
+			cursor: pointer;
+		}
+		#margin-left-content {
+		
+		}
+		#margin-right-content {
+			
+		}
+		#footer {
+			display: grid;
+			grid-template-columns: 1fr 1fr 1fr;
+			grid-template-areas: ". . .";
+			background-color: #496498;
+		}
+		#footer-in {
+			padding: 20px;
+			font-size: 15px;
+			font-family: calibri;
+			color: white;
+		}
+		#footer-text {
+			margin: 0px;
+			padding: 0px;
+			text-align: center;
+		}
+		#credit-bar {
+			padding: 15px;
+			font-size: 12px;
+			font-family: calibri;
+			color: white;
+			background-color: #384D76;
+		}
+	</style>
+		
+	<head>
+		<title>iFrame</title>
+	</head>
+	
+	<body id = "main">
+
+		<div id = "header">
+			<div id = "header-in">
+				<p id = "header-text">QuickPix</p>
+				<div id = "rss-options">
+					<!--#E34C80 vector icon colour, #E76591 search icon color-->
+					<div id = "search-box">
+						<div id = "input-box">
+							<input id = "search-input" type = "text" placeholder = "subreddits">
+						</div>
+						<img id = "search-button" title = "search" width = "35px" height = "35px" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIGlkPSJDYXBhXzEiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDMwLjIzOSAzMC4yMzkiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDMwLjIzOSAzMC4yMzk7IiB4bWw6c3BhY2U9InByZXNlcnZlIiBjbGFzcz0iIj48ZyB0cmFuc2Zvcm09Im1hdHJpeCgwLjk0MDgyMSAwIDAgMC45NDA4MjEgMC44OTQ3NTEgMC44OTQ3NTEpIj48Zz4KCTxwYXRoIGQ9Ik0yMC4xOTQsMy40NmMtNC42MTMtNC42MTMtMTIuMTIxLTQuNjEzLTE2LjczNCwwYy00LjYxMiw0LjYxNC00LjYxMiwxMi4xMjEsMCwxNi43MzUgICBjNC4xMDgsNC4xMDcsMTAuNTA2LDQuNTQ3LDE1LjExNiwxLjM0YzAuMDk3LDAuNDU5LDAuMzE5LDAuODk3LDAuNjc2LDEuMjU0bDYuNzE4LDYuNzE4YzAuOTc5LDAuOTc3LDIuNTYxLDAuOTc3LDMuNTM1LDAgICBjMC45NzgtMC45NzgsMC45NzgtMi41NiwwLTMuNTM1bC02LjcxOC02LjcyYy0wLjM1NS0wLjM1NC0wLjc5NC0wLjU3Ny0xLjI1My0wLjY3NEMyNC43NDMsMTMuOTY3LDI0LjMwMyw3LjU3LDIwLjE5NCwzLjQ2eiAgICBNMTguMDczLDE4LjA3NGMtMy40NDQsMy40NDQtOS4wNDksMy40NDQtMTIuNDkyLDBjLTMuNDQyLTMuNDQ0LTMuNDQyLTkuMDQ4LDAtMTIuNDkyYzMuNDQzLTMuNDQzLDkuMDQ4LTMuNDQzLDEyLjQ5MiwwICAgQzIxLjUxNyw5LjAyNiwyMS41MTcsMTQuNjMsMTguMDczLDE4LjA3NHoiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIGNsYXNzPSJhY3RpdmUtcGF0aCIgc3R5bGU9ImZpbGw6I0U3NjU5MSIgZGF0YS1vbGRfY29sb3I9IiNlNzY1OTEiPjwvcGF0aD4KPC9nPjwvZz4gPC9zdmc+" />
+					</div>
+					<img id = "reddit-option" title = "reddit" width = "70px" height = "70px" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQyOS43MDkgNDI5LjcwOSIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNDI5LjcwOSA0MjkuNzA5OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIGNsYXNzPSIiPjxnPjxwYXRoIHN0eWxlPSJmaWxsOiNFMzRDODAiIGQ9Ik00MjkuNzA5LDE5Ni42MThjMC0yOS44MDMtMjQuMTYtNTMuOTYyLTUzLjk2My01My45NjJjLTE0LjkyNiwwLTI4LjQxLDYuMDg1LTM4LjE3NiwxNS44ODEgIGMtMzAuMTc3LTE5LjQ2My02OC43My0zMS44NjYtMTExLjA3Mi0zMy44MDFjMC4wMjYtMTcuOTc4LDguMDc4LTM0LjczNywyMi4xMDQtNDUuOTg5YzE0LjA1MS0xMS4yNzEsMzIuMTk4LTE1LjQ5Miw0OS43NzUtMTEuNTg4ICBsMi40MTQsMC41MzZjLTAuMDI0LDAuNjA1LTAuMDkxLDEuMTk4LTAuMDkxLDEuODA5YzAsMjQuODc4LDIwLjE2OCw0NS4wNDYsNDUuMDQ2LDQ1LjA0NnM0NS4wNDYtMjAuMTY4LDQ1LjA0Ni00NS4wNDYgIGMwLTI0Ljg3OS0yMC4xNjgtNDUuMDQ2LTQ1LjA0Ni00NS4wNDZjLTE1Ljk5NywwLTMwLjAxLDguMzYyLTM4LjAwMiwyMC45MjlsLTQuMzE3LTAuOTU5Yy0yNC41MS01LjQ0Ni00OS44MDcsMC40NDItNjkuMzk1LDE2LjE1NiAgYy0xOS41NjQsMTUuNjk1LTMwLjc5MiwzOS4wNzQtMzAuODE4LDY0LjE1MmMtNDIuMzMyLDEuOTM0LTgwLjg3OCwxNC4zMzEtMTExLjA1MiwzMy43ODVjLTkuNzY3LTkuNzk4LTIzLjI3MS0xNS44NjYtMzguMi0xNS44NjYgIEMyNC4xNiwxNDIuNjU2LDAsMTY2LjgxNSwwLDE5Ni42MThjMCwyMC43NjUsMTEuNzUsMzguNzU1LDI4Ljk0Niw0Ny43NzZjLTEuMzA2LDYuNjgtMS45OTMsMTMuNTEtMS45OTMsMjAuNDYyICBjMCw3Ny41MzgsODQuMTI2LDE0MC4zOTUsMTg3LjkwMSwxNDAuMzk1czE4Ny45MDEtNjIuODU3LDE4Ny45MDEtMTQwLjM5NWMwLTYuOTQ4LTAuNjg3LTEzLjc3NS0xLjk5MS0yMC40NTIgIEM0MTcuOTYxLDIzNS4zODEsNDI5LjcwOSwyMTcuMzg1LDQyOS43MDksMTk2LjYxOHogTTM0NS43NDYsNDcuNzQzYzEyLDAsMjEuNzYyLDkuNzYyLDIxLjc2MiwyMS43NjIgIGMwLDExLjk5OS05Ljc2MiwyMS43NjEtMjEuNzYyLDIxLjc2MXMtMjEuNzYyLTkuNzYyLTIxLjc2Mi0yMS43NjFDMzIzLjk4NCw1Ny41MDUsMzMzLjc0Nyw0Ny43NDMsMzQ1Ljc0Niw0Ny43NDN6IE0yMy4yODQsMTk2LjYxOCAgYzAtMTYuOTE2LDEzLjc2Mi0zMC42NzgsMzAuNjc4LTMwLjY3OGM3LjI0NSwwLDEzLjg5NSwyLjUzOCwxOS4xNDIsNi43NThjLTE2LjQxMiwxNC4wOC0yOS4xMTgsMzAuNjMxLTM3LjAwNyw0OC44MDQgIEMyOC4zNDksMjE1LjkzNywyMy4yODQsMjA2Ljg2OCwyMy4yODQsMTk2LjYxOHogTTMzMy43ODQsMzQ1LjQ3N2MtMzEuNDkyLDIzLjUzLTczLjcyOSwzNi40ODktMTE4LjkyOSwzNi40ODkgIHMtODcuNDM3LTEyLjk1OS0xMTguOTI5LTM2LjQ4OWMtMjkuNDYyLTIyLjAxMy00NS42ODgtNTAuNjQ1LTQ1LjY4OC04MC42MjFjMC0yOS45NzcsMTYuMjI2LTU4LjYwOSw0NS42ODgtODAuNjIyICBjMzEuNDkyLTIzLjUzLDczLjcyOS0zNi40ODksMTE4LjkyOS0zNi40ODlzODcuNDM3LDEyLjk1OSwxMTguOTI5LDM2LjQ4OWMyOS40NjIsMjIuMDEzLDQ1LjY4OCw1MC42NDUsNDUuNjg4LDgwLjYyMiAgQzM3OS40NzEsMjk0LjgzMiwzNjMuMjQ2LDMyMy40NjQsMzMzLjc4NCwzNDUuNDc3eiBNMzkzLjYwNSwyMjEuNDg4Yy03Ljg5MS0xOC4xNy0yMC41OTYtMzQuNzE2LTM3LjAwNS00OC43OTQgIGM1LjI0Ny00LjIyLDExLjkwMS02Ljc1NCwxOS4xNDctNi43NTRjMTYuOTE2LDAsMzAuNjc4LDEzLjc2MiwzMC42NzgsMzAuNjc4QzQwNi40MjQsMjA2Ljg2Nyw0MDEuMzUzLDIxNS45MjUsMzkzLjYwNSwyMjEuNDg4eiIgZGF0YS1vcmlnaW5hbD0iIzE4MUExQyIgY2xhc3M9ImFjdGl2ZS1wYXRoIiBkYXRhLW9sZF9jb2xvcj0iIzE4MUExQyI+PC9wYXRoPjxnPgoJPGNpcmNsZSBzdHlsZT0iZmlsbDojRTM0QzgwIiBjeD0iMTQ2LjIyIiBjeT0iMjMyLjA3IiByPSIyNC41NyIgZGF0YS1vcmlnaW5hbD0iI0Q4MDAwMCIgY2xhc3M9IiIgZGF0YS1vbGRfY29sb3I9IiMwMjAyMDIiPjwvY2lyY2xlPgoJPGNpcmNsZSBzdHlsZT0iZmlsbDojRTM0QzgwIiBjeD0iMjgzLjQ4IiBjeT0iMjMyLjA3IiByPSIyNC41NyIgZGF0YS1vcmlnaW5hbD0iI0Q4MDAwMCIgY2xhc3M9IiIgZGF0YS1vbGRfY29sb3I9IiMwMjAyMDIiPjwvY2lyY2xlPgo8L2c+PHBhdGggc3R5bGU9ImZpbGw6I0UzNEM4MCIgZD0iTTI3My4wNzksMjkxLjc3M2MtMTcuMzIsMTUuNzgtMzkuNzczLDI0LjQ3LTYzLjIyNCwyNC40N2MtMjYuMzMyLDAtNTAuNzI5LTEwLjYxMi02OC42OTYtMjkuODgxICBjLTQuMzg0LTQuNzA0LTExLjc1MS00Ljk2LTE2LjQ1NC0wLjU3NWMtNC43MDMsNC4zODQtNC45NiwxMS43NTItMC41NzUsMTYuNDU0YzIyLjA5NSwyMy42OTUsNTMuMzQxLDM3LjI4NSw4NS43MjYsMzcuMjg1ICBjMjkuMjY2LDAsNTcuMjg4LTEwLjg0Nyw3OC45MDUtMzAuNTQzYzQuNzUyLTQuMzMsNS4wOTYtMTEuNjk0LDAuNzY1LTE2LjQ0NkMyODUuMTk3LDI4Ny43ODgsMjc3LjgzOCwyODcuNDQsMjczLjA3OSwyOTEuNzczeiIgZGF0YS1vcmlnaW5hbD0iIzE4MUExQyIgY2xhc3M9ImFjdGl2ZS1wYXRoIiBkYXRhLW9sZF9jb2xvcj0iIzE4MUExQyI+PC9wYXRoPjwvZz4gPC9zdmc+" />
+					<img id = "nasa-option" title = "NASA image of the day" width = "70px" height = "70px" src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDUxMi4wMDEgNTEyLjAwMSIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNTEyLjAwMSA1MTIuMDAxOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjUxMnB4IiBoZWlnaHQ9IjUxMnB4Ij4KPGc+Cgk8Zz4KCQk8cGF0aCBkPSJNMjY4LjY2MiwyNDMuMzUxYy0zLjkxLTMuOTEtMTAuMjQtMy45MS0xNC4xNSwwYy0zLjksMy45LTMuOSwxMC4yMywwLDE0LjE0YzMuOTEsMy45LDEwLjI0LDMuOSwxNC4xNSwwICAgIEMyNzIuNTYyLDI1My41ODEsMjcyLjU2MiwyNDcuMjUxLDI2OC42NjIsMjQzLjM1MXoiIGZpbGw9IiNlMzRjODAiLz4KCTwvZz4KPC9nPgo8Zz4KCTxnPgoJCTxwYXRoIGQ9Ik0zOTUuOTMzLDExNi4wN2MtMTkuNTQtMTkuNTM5LTUxLjE3Mi0xOS41NC03MC43MTMsMGMtMTkuNDg5LDE5LjQ4OS0xOS40OSw1MS4yMDksMC4wMDMsNzAuNzE0ICAgIGMxOS40OTYsMTkuNDg0LDUxLjIxNiwxOS40OTIsNzAuNzEtMC4wMDJDNDE1LjQ3MSwxNjcuMjQ0LDQxNS40NzUsMTM1LjYxMSwzOTUuOTMzLDExNi4wN3ogTTM4MS43OTEsMTcyLjYzOSAgICBjLTExLjY5MywxMS42OTQtMzAuNzI3LDExLjY5NC00Mi40MjYsMC4wMDJjLTExLjY5NS0xMS43MDItMTEuNjk2LTMwLjczNi0wLjAwMi00Mi40MjljMTEuNzIzLTExLjcyMywzMC43MDMtMTEuNzI1LDQyLjQyOCwwICAgIEMzOTMuNTE0LDE0MS45MzQsMzkzLjUxNiwxNjAuOTE1LDM4MS43OTEsMTcyLjYzOXoiIGZpbGw9IiNlMzRjODAiLz4KCTwvZz4KPC9nPgo8Zz4KCTxnPgoJCTxwYXRoIGQ9Ik01MDkuMDcsMi45MjljLTEuOTY0LTEuOTYzLTQuNjQ0LTMuMDI3LTcuNDMtMi45MjJjLTIuMjYxLDAuMDgxLTU2LjA5NiwyLjI0NS0xMjAuMDkxLDI0Ljg2NCAgICBjLTUxLjI4LDE4LjEwNi05NC4wMjMsNDQuMDI5LTEyNy4wNDIsNzcuMDQ5Yy03LjM5OSw3LjM5OS0xNC41OTksMTUuMjQ1LTIxLjQ4OCwyMy4zOTZjLTMyLjY0OC0xOS4yMTgtNTguODEtMTMuMTkyLTc1LjM0OS00LjM0MSAgICBjLTM4LjA4MSwyMC4zOC02MS42NTIsNzUuNzE2LTYxLjY1MiwxMTUuMjk2YzAuMDAzLDQuMDQ0LDIuNDQsNy42OTEsNi4xNzYsOS4yMzhjMS4yMzcsMC41MTMsMi41MzcsMC43NjIsMy44MjUsMC43NjIgICAgYzIuNjAzLDAsNS4xNi0xLjAxNyw3LjA3My0yLjkyOWMyMC4wODMtMjAuMDgzLDQ0Ljg1NC0xOC44MjcsNTIuOTQ2LTE3Ljc2M2wzLjUwMiwzLjUwMmMtNi44OTIsMTYuNC0xMi40NDQsMzIuNzA4LTE2LjUxNiw0OC41NjkgICAgYy0xLjQ3LDUuNzQtMC45NzQsMTEuODE0LDEuMjExLDE3LjM3Yy05LjYyOCw0LjQzNy0xOC45MTcsMTAuOTUyLTI3LjAwNSwxOS4wNGMtMjUuNzQxLDI1Ljc0Mi0zMC45NjgsODguNDc2LTMxLjE3OCw5MS4xMzQgICAgYy0wLjIzLDIuOTE3LDAuODI4LDUuNzg5LDIuODk3LDcuODU4YzEuODgzLDEuODgyLDQuNDMsMi45MjksNy4wNywyLjkyOWMwLjI2MiwwLDAuNTI1LTAuMDEsMC43ODgtMC4wMzEgICAgYzIuNjU4LTAuMjA5LDY1LjM5NC01LjQzNiw5MS4xMzUtMzEuMTc3YzguMDg1LTguMDg1LDE0LjU5OS0xNy4zNzMsMTkuMDM2LTI2Ljk5OWM1Ljg4MiwyLjMxMywxMS45MzYsMi41OTgsMTcuMzgsMS4yMDMgICAgYzE1Ljg1NC00LjA3MSwzMi4xNi05LjYyMSw0OC41NjItMTYuNTE0bDMuNTAyLDMuNTAyYzEuMDYzLDguMDkzLDIuMzE5LDMyLjg2NC0xNy43NjMsNTIuOTQ1ICAgIGMtMi44NTksMi44Ni0zLjcxNSw3LjE2MS0yLjE2NywxMC44OTdjMS41NDcsMy43MzcsNS4xOTMsNi4xNzMsOS4yMzgsNi4xNzNjMzkuNTgsMCw5NC45MTUtMjMuNTcxLDExNS4yOTUtNjEuNjUyICAgIGM4Ljg1MS0xNi41MzcsMTQuODc3LTQyLjY5OS00LjM0MS03NS4zNDhjOC4xNDctNi44ODYsMTUuOTk0LTE0LjA4NiwyMy4zOTYtMjEuNDg4YzMzLjAyLTMzLjAyLDU4Ljk0Mi03NS43NjMsNzcuMDQ4LTEyNy4wMzkgICAgYzIyLjYyLTYzLjk5OCwyNC43ODMtMTE3LjgzNCwyNC44NjQtMTIwLjA5NEM1MTIuMDkyLDcuNTg0LDUxMS4wMzMsNC44OTMsNTA5LjA3LDIuOTI5eiBNMTE4LjM3NiwyMTQuNzYyICAgIGM2LjIxMi0zMC4wNjMsMjQuMjU1LTYzLjA1Miw0OC43MzUtNzYuMTU0YzE2LjM1OS04Ljc1NCwzNC4yNC03Ljg5Niw1My4yNTIsMi41MTFjLTE2LjE5NywyMS4zMDItMzAuMjc4LDQ0LjI1Mi00Mi4wMTUsNjguNDg3ICAgIGMtMC4xNDktMC4wOTItMS45NDktMi4zNTUtNS4yOTMtMy4xMDlDMTcxLjY4LDIwNi4xODYsMTQ1LjIyMSwyMDAuNDk1LDExOC4zNzYsMjE0Ljc2MnogTTE4My44LDM3MC42MyAgICBjLTEzLjc1LDEzLjc1LTQ2LjAwNSwyMS4wMDItNjYuMzkyLDIzLjk2M2MyLjk2Mi0yMC4zODgsMTAuMjE1LTUyLjY0MiwyMy45NjQtNjYuMzkxYzcuNy03LjcsMTYuNjI4LTEzLjUzOCwyNS42MDItMTYuODI2ICAgIGwzMy42NTIsMzMuNjUyQzE5Ny4zMzgsMzU0LjAwMiwxOTEuNTAxLDM2Mi45MywxODMuOCwzNzAuNjN6IE0yMjkuMzksMzM5LjYwM2MtMi44OTQsMC43NDEtNi4yNDYtMC4zNDctOC43MzgtMi44MzUgICAgYy0xMi45MzctMTIuOTM3LTE3Ljk5OC0xNy45OTgtMTkuNTg2LTE5LjU4NWMtMi45MTItMi45MTItMTAuMDUzLTEwLjA1My0yNS44MjYtMjUuODI3Yy0yLjQ5NC0yLjQ5OS0zLjU4Mi01Ljg1LTIuODQzLTguNzM5ICAgIGMzLjIwMy0xMi40NzQsNy4zOTItMjUuMjcyLDEyLjQ4Ni0zOC4xOTNsODIuNjk1LDgyLjY5NUMyNTQuNjU1LDMzMi4yMTQsMjQxLjg1OSwzMzYuNDAyLDIyOS4zOSwzMzkuNjAzeiBNMzczLjM5NCwzNDQuODkxICAgIGMtMTMuMTAyLDI0LjQ3OS00Ni4wOSw0Mi41MjMtNzYuMTUyLDQ4LjczNGM5LjU4NS0xOC4wMzcsMTEuNjk4LTQwLjk5OCw4LjE5Ni01NC45MjFjLTAuODEzLTMuMjM0LTIuOTIzLTQuODYtMy4wNDEtNS4wNTEgICAgYzI0LjIzMy0xMS43MzcsNDcuMTgyLTI1LjgxOCw2OC40ODYtNDIuMDE1QzM4MS4yOSwzMTAuNjUyLDM4Mi4xNDcsMzI4LjUzNSwzNzMuMzk0LDM0NC44OTF6IE0zOTUuOTQsMjQzLjM1ICAgIGMtOS4wMTEsOS4wMS0xOC43MTQsMTcuNzE1LTI4Ljg0LDI1Ljg3MmMtMjQuMzQyLDE5LjYtNTEuMTM0LDM2LjIwMi03OS43MTgsNDkuNDE4bC05NC4wMi05NC4wMTggICAgYzEzLjIxNi0yOC41ODYsMjkuODE4LTU1LjM3OCw0OS40MTYtNzkuNzE3YzguMTY0LTEwLjEzMywxNi44NjgtMTkuODM3LDI1Ljg3NS0yOC44NDMgICAgYzI5LjYyNS0yOS42MjYsNjcuODU5LTUzLjIwNCwxMTMuNjcxLTcwLjE3Nmw4My43OTIsODMuNzkyQzQ0OS4xNDYsMTc1LjQ4OSw0MjUuNTY4LDIxMy43MjMsMzk1Ljk0LDI0My4zNXogTTQ3My4zMTEsMTA4LjU4NyAgICBsLTY5Ljg5Ni02OS44OTZjMzguMDgxLTExLjgyOCw3MS4yMS0xNi4yNTcsODcuNzQ2LTE3Ljg0OUM0ODkuNTY4LDM3LjM4MSw0ODUuMTM4LDcwLjUxLDQ3My4zMTEsMTA4LjU4N3oiIGZpbGw9IiNlMzRjODAiLz4KCTwvZz4KPC9nPgo8Zz4KCTxnPgoJCTxwYXRoIGQ9Ik0yNDAuMzcxLDQxMy4wNDljLTMuOTA3LTMuOTA1LTEwLjIzOS0zLjkwMy0xNC4xNDMsMC4wMDJsLTI4LjI4LDI4LjI5Yy0zLjkwNCwzLjkwNi0zLjkwMywxMC4yMzgsMC4wMDIsMTQuMTQyICAgIGMzLjkwNywzLjkwNCwxMC4yMzksMy45MDQsMTQuMTQzLTAuMDAybDI4LjI4LTI4LjI5QzI0NC4yNzcsNDIzLjI4NSwyNDQuMjc2LDQxNi45NTMsMjQwLjM3MSw0MTMuMDQ5eiIgZmlsbD0iI2UzNGM4MCIvPgoJPC9nPgo8L2c+CjxnPgoJPGc+CgkJPHBhdGggZD0iTTk4Ljk1NCwyNzEuNjMxYy0zLjkwNC0zLjkwNi0xMC4yMzUtMy45MDYtMTQuMTQyLTAuMDAybC0yOC4yOSwyOC4yOGMtMy45MDYsMy45MDQtMy45MDcsMTAuMjM2LTAuMDAzLDE0LjE0MiAgICBjMy45MDMsMy45MDQsMTAuMjM0LDMuOTA4LDE0LjE0MiwwLjAwMmwyOC4yOS0yOC4yOEMxMDIuODU3LDI4MS44NjksMTAyLjg1OCwyNzUuNTM3LDk4Ljk1NCwyNzEuNjMxeiIgZmlsbD0iI2UzNGM4MCIvPgoJPC9nPgo8L2c+CjxnPgoJPGc+CgkJPHBhdGggZD0iTTE2OS42NjMsNDI3LjJjLTMuOTAzLTMuOTA1LTEwLjIzNi0zLjkwNS0xNC4xNDItMC4wMDFsLTY3Ljc0LDY3LjczYy0zLjkwNiwzLjkwNS0zLjkwNiwxMC4yMzctMC4wMDEsMTQuMTQyICAgIGMzLjkwMywzLjkwNSwxMC4yMzYsMy45MDcsMTQuMTQyLDAuMDAxbDY3Ljc0LTY3LjczQzE3My41NjgsNDM3LjQzNywxNzMuNTY4LDQzMS4xMDUsMTY5LjY2Myw0MjcuMnoiIGZpbGw9IiNlMzRjODAiLz4KCTwvZz4KPC9nPgo8Zz4KCTxnPgoJCTxwYXRoIGQ9Ik04OS42NjMsNDI3LjJjLTMuOTA0LTMuOTA1LTEwLjIzNy0zLjkwNS0xNC4xNDItMC4wMDFsLTY3Ljc0LDY3LjczYy0zLjkwNiwzLjkwNS0zLjkwNiwxMC4yMzctMC4wMDEsMTQuMTQyICAgIGMzLjkwMywzLjkwNSwxMC4yMzYsMy45MDcsMTQuMTQyLDAuMDAxbDY3Ljc0LTY3LjczQzkzLjU2OCw0MzcuNDM3LDkzLjU2OCw0MzEuMTA1LDg5LjY2Myw0MjcuMnoiIGZpbGw9IiNlMzRjODAiLz4KCTwvZz4KPC9nPgo8Zz4KCTxnPgoJCTxwYXRoIGQ9Ik04NC44MDIsMzQyLjMzOGMtMy45MDQtMy45MDQtMTAuMjM3LTMuOTA0LTE0LjE0MiwwLjAwMWwtNjcuNzMsNjcuNzRjLTMuOTA1LDMuOTA2LTMuOTA1LDEwLjIzNywwLjAwMSwxNC4xNDMgICAgYzMuOTA1LDMuOTA1LDEwLjIzNywzLjkwNSwxNC4xNDItMC4wMDFsNjcuNzMtNjcuNzRDODguNzA4LDM1Mi41NzUsODguNzA4LDM0Ni4yNDQsODQuODAyLDM0Mi4zMzh6IiBmaWxsPSIjZTM0YzgwIi8+Cgk8L2c+CjwvZz4KPGc+Cgk8Zz4KCQk8cGF0aCBkPSJNMzExLjA4MywyMDAuOTE5Yy0zLjkwNi0zLjkwNS0xMC4yMzYtMy45MDUtMTQuMTQzLDBsLTE0LjE0LDE0LjE0Yy0zLjkwNSwzLjkwNS0zLjkwNSwxMC4yMzcsMCwxNC4xNDMgICAgYzMuOTA2LDMuOTA1LDEwLjIzNywzLjkwNSwxNC4xNDMsMGwxNC4xNC0xNC4xNEMzMTQuOTg4LDIxMS4xNTcsMzE0Ljk4OCwyMDQuODI1LDMxMS4wODMsMjAwLjkxOXoiIGZpbGw9IiNlMzRjODAiLz4KCTwvZz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K" />
+				</div>
+			</div>
+		</div>
+		<div id = "app-main">
+			<div id = "app-block-wrapper">
+				<div id = "margin-left-content">
+				</div>
+			</div>
+			<div id = "app-block-wrapper">
+				<div id = "block-1-content">
+					<div id = "block-1-left"></div>
+					<div id = "block-1-right"></div>
+				</div>
+			</div>
+			<div id = "app-block-wrapper">
+				<div id = "margin-right-content">
+				</div>
+			</div>
+		</div>
+		<div id = "footer">
+			<div id = "footer-in">
+				<p id = "footer-text">Useful footer information</p>
+			</div>
+			<div id = "footer-in">
+				<p id = "footer-text">Useful footer social media</p>
+			</div>
+			<div id = "footer-in">
+				<p id = "footer-text">Useful footer contact</p>	
+			</div>
+		</div>
+		<div id = "credit-bar">
+			<div>
+					Icons made by <a href="https://www.freepik.com/" title="Freepik">Freepik</a> 
+					from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> 
+					is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
+			</div>
+		</div>
+
+		
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script>
+	
+		$(document).ready(function(){       
+			var scroll_pos = 0;
+			$(document).scroll(function() { 
+				scroll_pos = $(this).scrollTop();
+				if(scroll_pos >= 100) {
+					$("#header-in").css({"padding":"2px","padding-left":"30px","padding-right":"30px"});
+				} else {
+					$("#header-in").css({"padding":"30px"});
+				}
+			});
+		});
+		
+		
+		var nasaBlock = 1;
+		var redditBlock = 2;
+		var isReddit = 0;
+		var searchInput = "cat";
+		
+		mainInitial();
+		
+		$("#block-1-content").append("<img src = '' width= '100%' style='display:block'/>");
+		$("#margin-left-content").append("<img src = '' width= '100%' style='display:block'/>");
+		$("#margin-right-content").append("<img src = '' width= '100%' style='display:block'/>");
+		
+		$("#search-button").click(function() {
+			searchInput = $("#search-input").val().replace(/ /g, "");
+			redditIMG = [];
+			redditCount = 0;
+			secondaryInitial();
+		});
+		
+		$("#reddit-option").click(function() {
+			if (isReddit == 0) {
+				$("#search-box").fadeTo(600, 1, function() {
+					$("#search-box").css({"display":"block"});
+				});
+				isReddit = 1;
+				nasaBlock = 2;
+				redditBlock = 1;		
+				secondaryInitial();
+			}
+		});
+		
+		$("#nasa-option").click(function() {
+			if (isReddit == 1) {
+				$("#search-box").fadeTo(600, 0, function() {
+					setTimeout( function(){
+						$("#search-box").css({"display":"none"});
+					},600);
+				});
+				isReddit = 0;
+				nasaBlock = 1;
+				redditBlock = 2;
+				mainInitial();
+			}
+		});
+		
+		
+		var redditIMG = [];
+		var redditCount = 0;
+		var nasaIMG = [];
+		var nasaCount = 0;
+		
+		function mainInitial() {	
+			$.ajax({
+				type: 'GET',
+				url: 'https://cors-anywhere.herokuapp.com/' + 'https://www.nasa.gov/rss/dyn/lg_image_of_the_day.rss',
+				datatype: 'json',
+				success: function(data) {
+				data = xmlToJson(data);
+					
+					var nasaPush = -1;
+					
+					for (nasaPush; nasaPush <= data.rss.channel.item.length-1; nasaPush++) {
+						if (nasaPush == -1) {
+							nasaIMG.push(data.rss.channel.item.enclosure['@attributes']['url']);
+						} else {
+							nasaIMG.push(data.rss.channel.item[nasaPush].enclosure['@attributes']['url']);
+						}
+					}
+					$("#margin-left-content img").attr("src", "" + nasaIMG[getPrev(nasaIMG,nasaCount)] + "");
+					$("#block-1-content img").attr("src", "" + nasaIMG[nasaCount] + "");
+					$("#margin-right-content img").attr("src", "" + nasaIMG[getNext(nasaIMG,nasaCount)] + "");
+				}
+			});		
+		}
+		
+		function secondaryInitial() {
+			$.ajax({
+				type: 'GET',
+				url: 'https://cors-anywhere.herokuapp.com/' + 'https://www.reddit.com/r/'+searchInput+'.rss',
+				datatype: 'json',
+				success: function(data) {	
+				data = xmlToJson(data);
+					for (var i = 0; i <= data.feed.entry.length-1; i++) {
+						for (var j = parseInt(data.feed.entry[i].content['#text'].split('"').length); j >= 0; j--) {
+							if (String(data.feed.entry[i].content['#text'].split('"')[j]).includes(".jpg") && 
+							   !String(data.feed.entry[i].content['#text'].split('"')[j]).includes("thumbs",">")) {
+								redditIMG.push(data.feed.entry[i].content['#text'].split('"')[j]);
+							console.log(data.feed.entry[i].content['#text'].split('"')[j]);
+							}
+						}
+					}
+					$("#margin-left-content img").attr("src", "" + redditIMG[getPrev(redditIMG,redditCount)] + "");
+					$("#block-1-content img").attr("src", "" + redditIMG[redditCount] + "");
+					$("#margin-right-content img").attr("src", "" + redditIMG[getNext(redditIMG,redditCount)] + "");
+				}
+			});
+		}
+		
+		$("#block-1-left").click(function() {
+			if (nasaBlock == 1) {
+				nasaCount--;
+				if(nasaCount < 0) {
+					nasaCount = nasaIMG.length-1;
+				}
+				$("#margin-left-content img").fadeTo(500, 0.4, function() {
+					$("#margin-left-content img").attr("src", "" + nasaIMG[getPrev(nasaIMG,nasaCount)] + "");
+				}).fadeTo(1200,1);
+				$("#block-1-content img").fadeTo(500, 0.4, function() {
+					$("#block-1-content img").attr("src", "" + nasaIMG[nasaCount] + "");
+				}).fadeTo(1200,1);
+				$("#margin-right-content img").fadeTo(500, 0.4, function() {
+					$("#margin-right-content img").attr("src", "" + nasaIMG[getNext(nasaIMG,nasaCount)] + "");
+				}).fadeTo(1200,1);
+			} else if (redditBlock == 1) {
+				redditCount--;
+				if (redditCount < 0) {
+					redditCount = redditIMG.length-1;
+				}
+				$("#margin-left-content img").fadeTo(500, 0.4, function() {
+					$("#margin-left-content img").attr("src", "" + redditIMG[getPrev(redditIMG,redditCount)] + "");
+				}).fadeTo(1200,1); 
+				$("#block-1-content img").fadeTo(500, 0.4, function() {
+					$("#block-1-content img").attr("src", "" + redditIMG[redditCount] + "");
+				}).fadeTo(1200,1);
+				$("#margin-right-content img").fadeTo(500, 0.4, function() {
+					$("#margin-right-content img").attr("src", "" + redditIMG[getNext(redditIMG,redditCount)] + "");
+				}).fadeTo(1200,1);
+			}
+		});
+		
+		$("#block-1-right").click(function() {
+			if (nasaBlock == 1) {
+				nasaCount++;
+				if(nasaCount > nasaIMG.length-1) {
+					nasaCount = 0;
+				}
+				$("#margin-left-content img").fadeTo(500, 0.4, function() {
+					$("#margin-left-content img").attr("src", "" + nasaIMG[getPrev(nasaIMG,nasaCount)] + "");
+				}).fadeTo(1200,1);
+				$("#block-1-content img").fadeTo(500, 0.4, function() {
+					$("#block-1-content img").attr("src", "" + nasaIMG[nasaCount] + "");
+				}).fadeTo(1200,1);
+				$("#margin-right-content img").fadeTo(500, 0.4, function() {
+					$("#margin-right-content img").attr("src", "" + nasaIMG[getNext(nasaIMG,nasaCount)] + "");
+				}).fadeTo(1200,1);
+			} else if (redditBlock == 1) {
+				redditCount++;
+				if (redditCount >redditIMG.length-1) {
+					redditCount = 0;
+				} 
+				$("#margin-left-content img").fadeTo(500, 0.4, function() {
+					$("#margin-left-content img").attr("src", "" + redditIMG[getPrev(redditIMG,redditCount)] + "");
+				}).fadeTo(1200,1); 
+				$("#block-1-content img").fadeTo(500, 0.4, function() {
+					$("#block-1-content img").attr("src", "" + redditIMG[redditCount] + "");
+				}).fadeTo(1200,1);
+				$("#margin-right-content img").fadeTo(500, 0.4, function() {
+					$("#margin-right-content img").attr("src", "" + redditIMG[getNext(redditIMG,redditCount)] + "");
+				}).fadeTo(1200,1);
+			}
+		});
+		
+		function getPrev(name, position) {
+			if (position == 0) {
+				return name.length-1;
+			} else {
+				return position-1;
+			}
+		}
+		
+		function getNext(name, position) {
+			if (position == name.length-1) {
+				return 0;
+			} else {
+				return position+1;
+			}
+		}
+		
+		function xmlToJson(xml) {
+			// Create the return object
+			var obj = [];
+			
+			if (xml.nodeType == 1) {
+				// do attributes
+				if (xml.attributes) {
+					if (xml.attributes.length > 0) {
+					obj["@attributes"] = [];
+						for (var j = 0; j < xml.attributes.length; j++) {
+							var attribute = xml.attributes.item(j);
+							obj["@attributes"][attribute.nodeName] = attribute.nodeValue;
+						}
+					}
+				}
+			} else if (xml.nodeType == 3) {
+				obj = xml.nodeValue;
+			}
+
+			// do children
+			if (xml.hasChildNodes()) {
+				for(var i = 0; i < xml.childNodes.length; i++) {
+					var item = xml.childNodes.item(i);
+					var nodeName = item.nodeName;
+					if (typeof(obj[nodeName]) == "undefined") {
+						obj[nodeName] = xmlToJson(item);
+					} else {
+						if (typeof(obj[nodeName].push) == "undefined") {
+							var old = obj[nodeName];
+							obj[nodeName] = [];
+							obj[nodeName].push(old);
+						}
+						obj[nodeName].push(xmlToJson(item));
+					}
+				}
+			}
+			return obj;
+		};
+	</script>
+	
+	</body>
+</html>
